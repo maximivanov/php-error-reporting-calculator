@@ -80,7 +80,7 @@ code {
 
 .erlc-constants__constant {
     display: block;
-    margin-bottom: 11px;
+    margin-bottom: 10px;
     font-size: 1.2em;
     opacity: .5;
     transition: opacity .25s ease-out;

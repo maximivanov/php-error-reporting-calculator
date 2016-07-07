@@ -288,6 +288,7 @@
             var errorReportingPreviewDom = widgetDom.querySelector('.erlc-preview__item--error-reporting .erlc-preview__item-value');
             var phpIniPreviewDom = widgetDom.querySelector('.erlc-preview__item--php-ini .erlc-preview__item-value');
             var htaccessPreviewDom = widgetDom.querySelector('.erlc-preview__item--htaccess .erlc-preview__item-value');
+            var cliPreviewDom = widgetDom.querySelector('.erlc-preview__item--cli .erlc-preview__item-value');
 
             function getConstantsString(level) {
                 var constants = config.getConstantsByLevel(level);
@@ -322,6 +323,7 @@
                     errorReportingPreviewDom.textContent = constantsString;
                     phpIniPreviewDom.textContent = constantsString;
                     htaccessPreviewDom.textContent = selectedLevel;
+                    cliPreviewDom.textContent = selectedLevel;
                 }
             };
         }(config, root.document.querySelector('.erlc-preview')));
