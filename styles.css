@@ -1,0 +1,165 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1 {
+    margin: 0;
+}
+
+code {
+    letter-spacing: 0;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.erlc-body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: #222;
+    padding: 0;
+    margin: 0;
+}
+
+.erlc-page-header {
+    background-color: #8892BF;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.erlc-page-header h1 {
+    max-width: 1000px;
+    padding: 30px 5%;
+    margin: 0 auto;
+    text-shadow: 0 -2px 0 rgba(0, 0, 0, .3);
+}
+
+.erlc-content {
+    padding: 0 5%;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+.erlc-description {
+    margin-bottom: 30px;
+}
+
+.erlc-description ul {
+    list-style-position: inside;
+    margin-left: 15px;
+    padding-left: 0;
+}
+
+.erlc-version {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.erlc-version__select {
+    font-size: 1em;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+@media only screen and (min-width: 600px) {
+    .erlc-calculator > * {
+        float: left;
+        width: 50%;
+    }
+}
+
+.erlc-constants {
+    margin-bottom: 30px;
+}
+
+.erlc-constants__constant {
+    display: block;
+    margin-bottom: 11px;
+    font-size: 1.2em;
+    opacity: .5;
+    transition: opacity .25s ease-out;
+}
+
+.erlc-constants__constant--selected {
+    opacity: 1;
+    transition: opacity .25s ease-out;
+}
+
+.erlc-constants__constant-label {
+    font-size: 1.1em;
+    margin-left: 5px;
+}
+
+.erlc-constants__constant-value {
+    margin-left: 5px;
+    font-size: .8em;
+    padding: 3px;
+    background-color: #E6E6E6;
+    border-radius: 3px;
+}
+
+.erlc-constants__constant-description {
+    display: none;
+    font-size: .7em;
+}
+
+.erlc-level {
+    font-size: 1.6em;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+}
+
+.erlc-level__header {
+    display: block;
+    padding: 10px;
+    font-weight: 500;
+    background-color: #C4C9DF;
+    border-bottom: 1px solid #ccc;
+}
+
+.erlc-level__code {
+    padding: 10px;
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.erlc-level__input {
+    padding: 10px;
+    width: 160px;
+    border: 1px solid #ccc;
+    font-size: 1.3em;
+}
+
+.erlc-preview__item {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+.erlc-preview__item-header {
+    padding: 10px;
+    font-weight: 500;
+    background-color: #C4C9DF;
+    border-bottom: 1px solid #ccc;
+}
+
+.erlc-preview__item-code {
+    display: block;
+    padding: 10px;
+    background-color: #f2f2f2;
+    color: #0000BB;
+}
+
+.erlc-footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-top: 1px solid #ccc;
+    font-size: .8em;
+    margin-top: 10px;
+}

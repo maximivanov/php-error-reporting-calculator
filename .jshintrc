@@ -1,0 +1,23 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "noarg": true,
+    "noempty": true,
+    "nonew": true,
+    "node": true,
+    "sub": true,
+    "undef": true,
+    "unused": true,
+    "trailing": true,
+    "boss": true,
+    "eqnull": true,
+    "strict": true,
+    "immed": true,
+    "expr": true,
+    "latedef": "nofunc",
+    "quotmark": "single",
+    "indent": 4,
+    "globals": {
+        "window": true
+    }
+}
