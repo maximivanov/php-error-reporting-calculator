@@ -253,7 +253,7 @@
         var levelWidget = (function (config, widgetDom) {
             var inputDom = widgetDom.querySelector('.erlc-level__input');
 
-            inputDom.addEventListener('keyup', function onKeyUp() {
+            inputDom.addEventListener('input', function onInput() {
                 var inputLevel = inputDom.value;
 
                 if (isLevelValid(inputLevel)) {
