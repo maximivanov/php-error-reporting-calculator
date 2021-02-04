@@ -96,6 +96,10 @@ code {
     margin-left: 5px;
 }
 
+.erlc-constants__constant-label--removed {
+    text-decoration: line-through;
+}
+
 .erlc-constants__constant-value {
     margin-left: 5px;
     font-size: .8em;
@@ -105,7 +109,7 @@ code {
 }
 
 .erlc-constants__constant-description {
-    display: none;
+    margin-left: 10px;
     font-size: .7em;
 }
 

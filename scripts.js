@@ -4,7 +4,8 @@
     root.onload = function () {
         var config = {
             versions:                {
-                '5.4':   '5.4.* and higher',
+                '7.0':   '7.0.* and higher',
+                '5.4':   '5.4.* - 5.6.*',
                 '5.3':   '5.3.*',
                 '5.2':   '5.2.*',
                 '5.0':   '5.0.* - 5.1.*',
@@ -74,6 +75,7 @@
             },
             versionsToConstants:     {},
             versionsToEAllConstants: {},
+            versionsToConstantData: {},
             getMaxLevelByVersion:    function getMaxLevelByVersion(version) {
                 var level = 0;
                 config.versionsToConstants[version].forEach(function (constant) {
@@ -107,15 +109,21 @@
         config.versionsToConstants['5.2'] = config.versionsToConstants['5.0'].concat(['E_RECOVERABLE_ERROR']);
         config.versionsToConstants['5.3'] = config.versionsToConstants['5.2'].concat(['E_DEPRECATED', 'E_USER_DEPRECATED']);
         config.versionsToConstants['5.4'] = config.versionsToConstants['5.3'];
+        config.versionsToConstants['7.0'] = config.versionsToConstants['5.4'];
 
         config.versionsToEAllConstants['pre_5'] = config.versionsToConstants['pre_5'];
-        config.versionsToEAllConstants['5.0'] = config.versionsToConstants['5.0'].slice();
-        config.versionsToEAllConstants['5.0'].splice(config.versionsToEAllConstants['5.0'].indexOf('E_STRICT'), 1);
-        config.versionsToEAllConstants['5.2'] = config.versionsToConstants['5.2'].slice();
-        config.versionsToEAllConstants['5.2'].splice(config.versionsToEAllConstants['5.2'].indexOf('E_STRICT'), 1);
-        config.versionsToEAllConstants['5.3'] = config.versionsToConstants['5.3'].slice();
-        config.versionsToEAllConstants['5.3'].splice(config.versionsToEAllConstants['5.3'].indexOf('E_STRICT'), 1);
+        config.versionsToEAllConstants['5.0'] = config.versionsToConstants['5.0'].filter(i => i !== 'E_STRICT');
+        config.versionsToEAllConstants['5.2'] = config.versionsToConstants['5.2'].filter(i => i !== 'E_STRICT');
+        config.versionsToEAllConstants['5.3'] = config.versionsToConstants['5.3'].filter(i => i !== 'E_STRICT');
         config.versionsToEAllConstants['5.4'] = config.versionsToConstants['5.4'];
+        config.versionsToEAllConstants['7.0'] = config.versionsToConstants['7.0'];
+
+        config.versionsToConstantData['7.0'] = {
+            E_STRICT: {
+                removed: true,
+                description: '<a target="_blank" href="https://wiki.php.net/rfc/reclassify_e_strict">removed in PHP 7</a>'
+            }
+        }
 
         var selectedLevel;
         var maxLevel;
@@ -163,7 +171,7 @@
                 }
             }
 
-            function addConstant(constant, value, description) {
+            function addConstant(constant, value, constantData) {
                 var constantDom = document.createElement('code');
                 constantDom.setAttribute('data-value', value);
                 constantDom.classList.add('erlc-constants__constant');
@@ -176,6 +184,9 @@
 
                 var labelDom = document.createElement('label');
                 labelDom.classList.add('erlc-constants__constant-label');
+                if (constantData && constantData.removed) {
+                    labelDom.classList.add('erlc-constants__constant-label--removed');
+                }
                 labelDom.htmlFor = checkboxDom.id;
                 labelDom.textContent = constant;
                 constantDom.appendChild(labelDom);
@@ -186,10 +197,12 @@
                 valueDom.textContent = value;
                 constantDom.appendChild(valueDom);
 
-//                            var descriptionDom = document.createElement('div');
-//                            descriptionDom.classList.add('erlc-constants__constant-description');
-//                            descriptionDom.textContent = description;
-//                            constantDom.appendChild(descriptionDom);
+                if (constantData && constantData.description) {
+                    var descriptionDom = document.createElement('span');
+                    descriptionDom.classList.add('erlc-constants__constant-description');
+                    descriptionDom.innerHTML = constantData.description;
+                    constantDom.appendChild(descriptionDom);
+                }
 
                 widgetDom.appendChild(constantDom);
 
@@ -234,11 +247,12 @@
             }
 
             return {
-                showAvailableConstants: function showAvailableConstants() {
+                showAvailableConstants: function showAvailableConstants(version) {
                     resetWidget();
 
                     config.getConstantsByLevel(maxLevel).forEach(function (constant) {
-                        addConstant(constant, config.constants[constant].value, config.constants[constant].description);
+                        var constantData = config.versionsToConstantData[version] && config.versionsToConstantData[version][constant] ? config.versionsToConstantData[version][constant] : undefined
+                        addConstant(constant, config.constants[constant].value, constantData);
                     });
 
                     addConstant('E_ALL', eAllLevel, 'All errors and warnings, as supported, except of level E_STRICT prior to PHP 5.4.0.');
@@ -340,7 +354,7 @@
         versionWidget.addOnChangeHandler(function (version) {
             maxLevel = config.getMaxLevelByVersion(version);
             eAllLevel = config.getEAllLevelByVersion(version);
-            constantsWidget.showAvailableConstants();
+            constantsWidget.showAvailableConstants(version);
 
             selectedLevel = maxLevel;
             root.document.dispatchEvent(selectedLevelChangedEvent);
